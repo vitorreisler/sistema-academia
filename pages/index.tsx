@@ -92,7 +92,7 @@ export default function Home({
   };*/
 
   return (
-    <section className="container">
+    <section className="">
       <Head>
         <title>Sistema-Academia</title>
         <link rel="icon" href="/favicon.ico" />
