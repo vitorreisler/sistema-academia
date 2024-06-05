@@ -80,6 +80,6 @@ export const treinosPernasFrontal = [
         descanso: "60 segundos",
       },
     },
-  ];
+  ]; 
    
   
