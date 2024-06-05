@@ -27,30 +27,34 @@ const Matricula = () => {
 
   const handleSubmitForm = async (e) => {
     e.preventDefault();
-    const response = await axios.post(
-      "http://localhost:3000/api/matricularAluno",
-      { cpf: cpf, nome: nome, idade: idade },
-      {
-        headers: { "Content-Type": "application/json" },
-      }
-    );
-    const { data } = response;
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/api/matricularAluno",
+        { cpf: cpf, nome: nome, idade: idade },
+        {
+          headers: { "Content-Type": "application/json" },
+        }
+      );
+      const { data } = response;
 
-    if (data === "CPF EXISTENTE") {
-      return toast.error("CPF EXISTENTE");
-    } else {
-      toast.success("ALUNO MATRICULADO");
-      setTimeout(() => {
-        router.push("/");
-      }, 3000);
+      if (data === "CPF EXISTENTE") {
+        return toast.error("CPF EXISTENTE");
+      } else {
+        toast.success("ALUNO MATRICULADO");
+        setTimeout(() => {
+          router.push("/");
+        }, 3000);
+      }
+      return;
+    } catch (err) {
+      console.error(err);
     }
-    return;
   };
   return (
     <section className="h-dvh bg-yellow-300 grid grid-rows-12 grid-cols-12 items-center justify-center">
       <ToastContainer />
       <nav className="flex gap-3 col-start-1 col-span-12 row-start-1 mx-auto">
-        <a href="/paginaCPF">BuscarCPF</a> 
+        <a href="/paginaCPF">BuscarCPF</a>
         <br />
         <a href="/">Home</a>
       </nav>
