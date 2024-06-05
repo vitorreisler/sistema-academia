@@ -104,7 +104,7 @@ export default function Home({
           <br />
           <a href="/matricula">Matricula</a>
         </nav>
-        <button className="" onClick={handleSubmit}>
+        <button className="border border-black p-3 rounded shadow-md active:scale-95" onClick={handleSubmit}>
           submit
         </button>
         {todosUsuarios && (
