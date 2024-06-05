@@ -72,7 +72,7 @@ const PaginaCPF = () => {
   return (
     <section className="h-dvh flex flex-col items-center gap-3">
       <nav className="flex gap-3">
-        <a href="/">home</a>
+        <a href="/">Home</a>
         <br />
         <a href="/matricula">Matricula</a>
       </nav>
@@ -87,13 +87,13 @@ const PaginaCPF = () => {
       <button
         onClick={handleSubmitBusca}
         disabled={cpf.length === 11 ? false : true}
-        className="border border-black p-2 rounded"
+        className={`border border-black p-2 rounded ${cpf.length===11 ? "active:scale-95 hover:bg-black hover:text-white" : ""} `}
       >
         Submit
       </button>
       {usuario && (
         <section className=" flex flex-col gap-3">
-          <div className="border border-black p-4 rounded shadow-md">
+          <div className="border border-black p-4 rounded shadow-md bg-white m-2">
             {!usuario[0]?.nome || !usuario[0]?.cpf || !usuario[0]?.idade ? (
               "Usuario não encontrado"
             ) : (

@@ -104,18 +104,17 @@ export default function Home({
           <br />
           <a href="/matricula">Matricula</a>
         </nav>
-        <button className="border border-black p-3 rounded shadow-md active:scale-95" onClick={handleSubmit}>
+        <button className="border border-black p-3 rounded shadow-md active:scale-95 hover:bg-black hover:text-white" onClick={handleSubmit}>
           submit
         </button>
         {todosUsuarios && (
-          <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+          <div className="grid grid-cols-2 gap-3 md:grid-cols-4 p-2">
             {todosUsuarios.map((usuario: Usuario) => {
               return (
                 <div
                   key={usuario._id}
-                  className="flex flex-col p-4 mb-5 border border-black rounded shadow-lg"
+                  className="flex flex-col p-4 mb-5 border border-black rounded shadow-lg bg-white"
                 >
-                  {console.log(usuario)}
                   <p>Nome: {usuario.nome}</p>
                   <p>CPF: {usuario.cpf}</p>
                   <p>Idade: {usuario.idade}</p>

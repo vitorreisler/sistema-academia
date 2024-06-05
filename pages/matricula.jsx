@@ -51,12 +51,12 @@ const Matricula = () => {
     }
   };
   return (
-    <section className="h-dvh bg-yellow-300 grid grid-rows-12 grid-cols-12 items-center justify-center">
+    <section className="h-dvh  grid grid-rows-12 grid-cols-12 items-center justify-center">
       <ToastContainer />
       <nav className="flex gap-3 col-start-1 col-span-12 row-start-1 mx-auto">
-        <a href="/paginaCPF">BuscarCPF</a>
-        <br />
         <a href="/">Home</a>
+        <br />
+        <a href="/paginaCPF">BuscarCPF</a>
       </nav>
       <h1 className="text-2xl row-start-2 col-start-1 col-span-12 text-center">
         Area de Matricula
