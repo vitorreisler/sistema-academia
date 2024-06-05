@@ -39,7 +39,7 @@ export default function Home({
   const handleSubmit = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3000/api/mostrarUsuarios"
+        "https://sistema-academia.vercel.app/api/mostrarUsuarios"
       );
       const { data } = response;
       if (response.status === 200) {

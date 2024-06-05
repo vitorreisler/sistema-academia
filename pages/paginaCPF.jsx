@@ -20,7 +20,7 @@ const PaginaCPF = () => {
 
   const handleSubmitBusca = async () => {
     const response = await axios.post(
-      "http://localhost:3000/api/buscarCPF",
+      "https://sistema-academia.vercel.app/api/buscarCPF",
       { cpf: cpf },
       { headers: { "Content-Type": "application/json" } }
     );
