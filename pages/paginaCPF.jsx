@@ -1,5 +1,4 @@
 import axios from "axios";
-import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { treinosPeito } from "../treinos/peito";
 import { treinosCostas } from "../treinos/costas";

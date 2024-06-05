@@ -3,7 +3,6 @@ import clientPromise from "../lib/mongodb";
 import type { InferGetServerSidePropsType, GetServerSideProps } from "next";
 import axios from "axios";
 import React from "react";
-import { ObjectId } from "mongoose";
 
 type ConnectionStatus = {
   isConnected: boolean;
