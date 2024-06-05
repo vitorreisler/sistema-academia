@@ -29,7 +29,7 @@ const Matricula = () => {
     e.preventDefault();
     try {
       const response = await axios.post(
-        "http://localhost:3000/api/matricularAluno",
+        "https://sistema-academia.vercel.app/matricula/api/matricularAluno",
         { cpf: cpf, nome: nome, idade: idade },
         {
           headers: { "Content-Type": "application/json" },
