@@ -34,8 +34,6 @@ export const getServerSideProps: GetServerSideProps<
 export default function Home({
   isConnected,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const [addNames, setNamesToAdd] = React.useState("");
-  const [deleteNames, setNamesToDelete] = React.useState("");
   const [todosUsuarios, setTodosUsuarios] = React.useState([]);
 
   const handleSubmit = async () => {
