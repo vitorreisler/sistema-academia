@@ -3,6 +3,8 @@ import clientPromise from "../lib/mongodb";
 import type { InferGetServerSidePropsType, GetServerSideProps } from "next";
 import axios from "axios";
 import React from "react";
+import Loading from "./components/loading";
+
 
 type ConnectionStatus = {
   isConnected: boolean;
@@ -35,9 +37,11 @@ export default function Home({
   isConnected,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [todosUsuarios, setTodosUsuarios] = React.useState([]);
+  const [loading, setLoading] = React.useState(false)
 
   const handleSubmit = async () => {
     try {
+      setLoading(true)
       const response = await axios.get(
         "https://sistema-academia.vercel.app/api/mostrarUsuarios"
       );
@@ -49,6 +53,8 @@ export default function Home({
       }
     } catch (error) {
       console.error("Error fetching data:", error);
+    }finally{
+      setLoading(false)
     }
   };
 
@@ -107,7 +113,8 @@ export default function Home({
         <button className="border border-black p-3 rounded shadow-md active:scale-95 hover:bg-black hover:text-white" onClick={handleSubmit}>
           submit
         </button>
-        {todosUsuarios && (
+        {loading && <Loading/> }
+        {!loading && todosUsuarios && (
           <div className="grid grid-cols-2 gap-3 md:grid-cols-4 p-2">
             {todosUsuarios.map((usuario: Usuario) => {
               return (

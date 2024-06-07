@@ -1,4 +1,3 @@
-import axios from "axios";
 import clientPromise from "../../lib/mongodb";
 
 export default async function buscarCPF(req, res) {
