@@ -12,7 +12,7 @@ const SignUpTreinador = () => {
   
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+    e.preventDefault(); 
     try {
       const response = await axios.post(
         "https://sistema-academia.vercel.app/api/signUpTreinador",
