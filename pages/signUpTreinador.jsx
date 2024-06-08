@@ -1,18 +1,27 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Navbar from "./components/navbar";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
 
 const SignUpTreinador = () => {
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [cpf, setCPF] = useState(0);
-  const [cadastrado, setCadastrado] = useState("")
-  const router = useRouter()
-  
+  const [logado, setLogado] = useState(null)
+  const router = useRouter();
+  useEffect(() => {
+    localStorage.getItem("token") !== null ? setLogado(true) : setLogado(null);
+  }, [logado]);
 
+  if(logado !== null){
+    router.push("/")
+    return
+    }
+    console.log(logado);
   const handleSubmit = async (e) => {
-    e.preventDefault(); 
+    e.preventDefault();
     try {
       const response = await axios.post(
         "https://sistema-academia.vercel.app/api/signUpTreinador",
@@ -20,16 +29,15 @@ const SignUpTreinador = () => {
         { headers: { "Content-Type": "application/json" } }
       );
       const { data } = response;
-     if(data === "Este treinador ja existe"){
-      setCadastrado(data)
-      return 
-     }
-     setCadastrado("O Treiandor foi cadastrado");
-     setTimeout(() => {
-      router.push("/loginTreinador")
-     }, 3000);
+      if (data === "Este treinador ja existe") {
+        toast.error(data)
+        return;
+      }
+      toast.success(`O treinador ${nome} foi cadastrado`)
+      setTimeout(() => {
+        router.push("/loginTreinador");
+      }, 3000);
 
-      
       return;
     } catch (err) {
       console.error(err);
@@ -54,7 +62,8 @@ const SignUpTreinador = () => {
 
   return (
     <section className="flex flex-col items-center">
-      <Navbar/>
+      <Navbar />
+      <ToastContainer/>
       <h1 className="text-2xl my-4">Sign Up do treinador</h1>
       <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
         <div className="flex flex-col">
@@ -69,11 +78,14 @@ const SignUpTreinador = () => {
           <label htmlFor="cpf">CPF</label>
           <input onChange={handleChange} type="number" name="" id="cpf" />
         </div>
-        <button className="border border-black" type="submit">
+        <button
+          disabled={!nome || !cpf || !email || cpf.length !== 11}
+          className={`border border-black ${!nome || !cpf || !email || cpf.length !== 11 ? "" : ("hover:bg-black hover:text-white active:scale-95")} `}
+          type="submit"
+        >
           submit
         </button>
       </form>
-      {cadastrado && <p className="my-3">{cadastrado}</p> }
     </section>
   );
 };

@@ -2,10 +2,10 @@ import Head from "next/head";
 import clientPromise from "../lib/mongodb";
 import type { InferGetServerSidePropsType, GetServerSideProps } from "next";
 import axios from "axios";
-import React from "react";
+import React, { useEffect } from "react";
 import Loading from "./components/loading";
 import Navbar from "./components/navbar";
-
+import { useRouter } from "next/navigation";
 
 type ConnectionStatus = {
   isConnected: boolean;
@@ -38,11 +38,20 @@ export default function Home({
   isConnected,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const [todosUsuarios, setTodosUsuarios] = React.useState([]);
-  const [loading, setLoading] = React.useState(false)
+  const [loading, setLoading] = React.useState(false);
+  const [logado, setLogado] = React.useState(false);
+
+  const router = useRouter();
+
+  useEffect(() => {
+    localStorage.getItem("token") !== null ? setLogado(true) : setLogado(false);
+  }, [logado]);
+
+ 
 
   const handleSubmit = async () => {
     try {
-      setLoading(true)
+      setLoading(true);
       const response = await axios.get(
         "https://sistema-academia.vercel.app/api/mostrarUsuarios"
       );
@@ -54,49 +63,10 @@ export default function Home({
       }
     } catch (error) {
       console.error("Error fetching data:", error);
-    }finally{
-      setLoading(false)
+    } finally {
+      setLoading(false);
     }
   };
-
-  /*const handleSubmitAdd = async () => {
-    const response = await axios.post(
-      "http://localhost:3000/api/updateDBUser",
-      { name: addNames },
-      { headers: { "Content-Type": "application/json" } }
-    );
-    if (response.status === 200) {
-      console.log(response.data);
-    } else {
-      console.error("Error fetching data:", response.status);
-    }
-
-    return;
-  };
-
-  const handleSubmitDelete = async () => {
-    const response = await axios.post(
-      "http://localhost:3000/api/deleteUser",
-      { nome: deleteNames },
-      { headers: { "Content-Type": "application/json" } }
-    );
-    if (response.status === 200) {
-      console.log(response.data);
-    } else {
-      console.error("Error fetching data:", response.status);
-    }
-
-    return;
-  };
-
-  const handleChangeAdd = (e: any) => {
-    setNamesToAdd(e.target.value);
-    return addNames;
-  };
-  const handleChangeDelete = (e: any) => {
-    setNamesToDelete(e.target.value);
-    return deleteNames;
-  };*/
 
   return (
     <section className="">
@@ -107,11 +77,14 @@ export default function Home({
 
       <main className="flex flex-col my-5 gap-4 items-center ">
         <Navbar />
-        <button className="border border-black p-3 rounded shadow-md active:scale-95 hover:bg-black hover:text-white" onClick={handleSubmit}>
+        {logado && <button
+          className="border border-black p-3 rounded shadow-md active:scale-95 hover:bg-black hover:text-white"
+          onClick={handleSubmit}
+        >
           submit
-        </button>
-        {loading && <Loading/> }
-        {!loading && todosUsuarios && (
+        </button>}
+        {loading && <Loading />}
+       { logado && !loading && todosUsuarios && (
           <div className="grid grid-cols-2 gap-3 md:grid-cols-4 p-2">
             {todosUsuarios.map((usuario: Usuario) => {
               return (
