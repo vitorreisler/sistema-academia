@@ -4,6 +4,7 @@ import type { InferGetServerSidePropsType, GetServerSideProps } from "next";
 import axios from "axios";
 import React from "react";
 import Loading from "./components/loading";
+import Navbar from "./components/navbar";
 
 
 type ConnectionStatus = {
@@ -104,12 +105,8 @@ export default function Home({
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex flex-col my-5 gap-4 items-center">
-        <nav className="flex gap-3">
-          <a href="/paginaCPF">BuscarCPF</a>
-          <br />
-          <a href="/matricula">Matricula</a>
-        </nav>
+      <main className="flex flex-col my-5 gap-4 items-center ">
+        <Navbar />
         <button className="border border-black p-3 rounded shadow-md active:scale-95 hover:bg-black hover:text-white" onClick={handleSubmit}>
           submit
         </button>

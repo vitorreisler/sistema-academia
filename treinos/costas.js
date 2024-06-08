@@ -76,5 +76,4 @@ export const treinosCostas = [
     },
   ];
   
-  console.log(treinosCostas);
   

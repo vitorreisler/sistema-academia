@@ -8,6 +8,7 @@ import { treinosTriceps } from "../treinos/triceps";
 import { treinosPernasFrontal } from "../treinos/pernasFrontal";
 import { treinosPernasPosterior } from "../treinos/pernasPosterior";
 import Loading from "./components/loading";
+import Navbar from "./components/navbar";
 
 const PaginaCPF = () => {
   const [cpf, setCPF] = useState("");
@@ -79,11 +80,7 @@ const PaginaCPF = () => {
 
   return (
     <section className="h-dvh flex flex-col items-center gap-3">
-      <nav className="flex gap-3">
-        <a href="/">Home</a>
-        <br />
-        <a href="/matricula">Matricula</a>
-      </nav>
+     <Navbar />
       <h1 className="text-2xl">Insira seu CPF</h1>
       <input
         onChange={handleOnChange}

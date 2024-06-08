@@ -3,6 +3,7 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/navigation";
+import Navbar from "./components/navbar";
 
 const Matricula = () => {
   const [cpf, setCPF] = React.useState("");
@@ -12,9 +13,7 @@ const Matricula = () => {
   const router = useRouter();
 
   const handleOnChangeCPF = (e) => {
-    if (cpf.length <= 11) {
-      setCPF(e.target.value);
-    }
+    setCPF(e.target.value);
   };
 
   const handleOnChangeNome = (e) => {
@@ -51,20 +50,19 @@ const Matricula = () => {
     }
   };
   return (
-    <section className="h-dvh  grid grid-rows-12 grid-cols-12 items-center justify-center">
+    <>
+    
+    <section className="h-dvh  flex flex-col items-center  ">
+      {console.log(cpf)}
+      <Navbar />
       <ToastContainer />
-      <nav className="flex gap-3 col-start-1 col-span-12 row-start-1 mx-auto">
-        <a href="/">Home</a>
-        <br />
-        <a href="/paginaCPF">BuscarCPF</a>
-      </nav>
-      <h1 className="text-2xl row-start-2 col-start-1 col-span-12 text-center">
-        Area de Matricula
-      </h1>
       <form
         onSubmit={handleSubmitForm}
-        className="flex flex-col row-start-5 col-start-1 col-span-12 mx-auto"
+        className="flex flex-col items-center my-auto"
       >
+      <h1 className="text-2xl  text-center">
+        Area de Matricula
+      </h1>
         <label className="text-center" htmlFor="cpf">
           CPF do aluno
         </label>
@@ -101,9 +99,9 @@ const Matricula = () => {
           id="idade"
         />
         <button
-          disabled={!cpf || !nome || !idade ? true : false}
+          disabled={!cpf || !nome || !idade || cpf.length !== 11 ? true : false}
           className={`border rounded p-2 border-black ${
-            !cpf || !nome || !idade ? "" : "hover:text-white hover:bg-gray-900"
+            !cpf || !nome || !idade || cpf.length !== 11 ? "" : "hover:text-white hover:bg-gray-900"
           }`}
           type="submit"
         >
@@ -111,6 +109,7 @@ const Matricula = () => {
         </button>
       </form>
     </section>
+    </>
   );
 };
 

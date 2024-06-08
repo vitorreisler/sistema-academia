@@ -6,8 +6,8 @@ try {
     const db = client.db("sistema-academia")
     const user = await db.collection("users").find({}).toArray()
     return res.json(user)
-} catch (e){
-    console.error(e)
+} catch (err){
+    console.error(err)
 
 }
 }
