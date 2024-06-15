@@ -16,9 +16,9 @@ const Navbar = () => {
     <nav className="flex gap-3 items-center my-4 flex-wrap justify-center">
       <a href="/">Home</a>
       <br />
-      <a href="/matricula">matricula</a>
+      <a href="/matricula">Matricula</a>
       <br />
-      <a href="/paginaCPF">buscarCPF</a>
+      <a href="/paginaCPF">BuscarCPF</a>
       <br />
       {logado ? (
         <>

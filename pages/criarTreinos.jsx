@@ -1,53 +1,140 @@
 import { useState } from "react";
 import Navbar from "./components/navbar";
+import axios from "axios";
 
 const CriarTreinos = () => {
-  const [nivel, setNivel] = useState();
+  const [nivel, setNivel] = useState("iniciante");
+  const [exercicios, setExercicios] = useState([
+    { id: 1, nome: "", series: "", repeticoes: "", descanso: "" },
+  ]);
 
-  const handleOnChange = (e) => {
-    switch (e.target.id) {
-        case "nivel":
-                setNivel(e.target.value)
-            break;
-    
-        default:
-            break;
-    }
-    return
+  const handleOnChange = (e, id) => {
+    const { name, value } = e.target;
+    setExercicios((prevExercicios) =>
+      prevExercicios.map((ex) => (ex.id === id ? { ...ex, [name]: value } : ex))
+    );
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    const treinoData = {
+      nivel: nivel,
+      exercicios: exercicios,
+    };
 
-    return;
+    try {
+      const response = await axios.post(
+        "https://sistema-academia.vercel.app/api/criarTreino",
+        treinoData,
+        { headers: { "Content-Type": "application/json" } }
+      );
+      console.log(response.data);
+    } catch (error) {
+      console.error("Error creating treino:", error);
+    }
   };
+
+  const verTreino = async () => {
+    try {
+      const response1 = await axios.get("https://sistema-academia.vercel.app/api/verTreino");
+      console.log(response1.data);
+    } catch (error) {
+      console.error("Error creating treino:", error);
+    }
+  };
+
+  const handleClickPlus = () => {
+    setExercicios([
+      ...exercicios,
+      {
+        id: exercicios.length + 1,
+        nome: "",
+        series: "",
+        repeticoes: "",
+        descanso: "",
+      },
+    ]);
+  };
+
   return (
-    <section className="flex flex-col items-center justify-center">
+    <section className="flex flex-col items-center justify-center p-2">
       <Navbar />
-      <form onSubmit={handleSubmit} action="">
+      <form onSubmit={handleSubmit} method="">
         <div>
           <label htmlFor="nivel">Treino Nivel: </label>
-          <select onChange={handleOnChange} name="" id="nivel">
+          <select
+            onChange={(e) => setNivel(e.target.value)}
+            name="nivel"
+            id="nivel"
+          >
             <option value="iniciante">Iniciante</option>
             <option value="moderado">Moderado</option>
-            <option value="avancado">Avancado</option>
+            <option value="avancado">Avançado</option>
           </select>
         </div>
-        <h3>ex1:</h3>
-        <div className="flex flex-col">
-            <label  htmlFor="nomeEx1">Nome:</label>
-            <input type="text" name="" id="nomeEx1" />
-            <br />
-            <label htmlFor="seriesEx1">Series:</label>
-            <input type="number" name="" id="seriesEx1" />
-            <br />
-            <label htmlFor="repeticoesEx1">Repetições:</label>
-            <input type="number" name="" id="repeticoesEx1" />
-            <br />
-            <label htmlFor="descansoEx1">Descanso:</label>
-            <input type="text" name="" id="descansoEx1" />
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 my-3">
+          {exercicios.map((ex) => (
+            <div className="border border-black rounded-md p-3" key={ex.id}>
+              <h3>ex{ex.id}:</h3>
+              <div className="flex flex-col">
+                <label htmlFor={`nomeEx${ex.id}`}>Nome:</label>
+                <input
+                  onChange={(e) => handleOnChange(e, ex.id)}
+                  type="text"
+                  name="nome"
+                  value={ex.nome}
+                  id={`nomeEx${ex.id}`}
+                />
+                <br />
+                <label htmlFor={`seriesEx${ex.id}`}>Series:</label>
+                <input
+                  onChange={(e) => handleOnChange(e, ex.id)}
+                  type="number"
+                  name="series"
+                  value={ex.series}
+                  id={`seriesEx${ex.id}`}
+                />
+                <br />
+                <label htmlFor={`repeticoesEx${ex.id}`}>Repetições:</label>
+                <input
+                  onChange={(e) => handleOnChange(e, ex.id)}
+                  type="number"
+                  name="repeticoes"
+                  value={ex.repeticoes}
+                  id={`repeticoesEx${ex.id}`}
+                />
+                <br />
+                <label htmlFor={`descansoEx${ex.id}`}>Descanso:</label>
+                <input
+                  onChange={(e) => handleOnChange(e, ex.id)}
+                  type="text"
+                  name="descanso"
+                  value={ex.descanso}
+                  id={`descansoEx${ex.id}`}
+                />
+              </div>
+            </div>
+          ))}
         </div>
-        <button className="border border-black p-4"> submit</button>
+        <div className="flex gap-3">
+          <button type="submit" className="border border-black p-4">
+            submit
+          </button>
+          <button
+            type="button"
+            onClick={handleClickPlus}
+            className="border border-black p-4"
+          >
+            +
+          </button>
+          <button
+            type="button"
+            onClick={verTreino}
+            className="border border-black p-4"
+          >
+            ver treino
+          </button>
+        </div>
       </form>
     </section>
   );

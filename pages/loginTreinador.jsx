@@ -15,7 +15,7 @@ const LoginTreinador = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true)
+    setLoading(true);
     try {
       const response = await axios.post(
         "https://sistema-academia.vercel.app/api/loginTreinador",
@@ -30,20 +30,20 @@ const LoginTreinador = () => {
       const { data } = response;
       if (data !== "Treinador não encontrado") {
         localStorage.setItem("token", data);
-        toast.success("Entrando...")
+        toast.success("Entrando...");
         setTimeout(() => {
           router.push("/");
         }, 1000);
         return;
       }
       setErro("Treinador não encontrado");
-      toast.error("Login Incorreto...")
+      toast.error("Login Incorreto...");
 
       return;
     } catch (err) {
       console.error(err);
-    }finally{
-      setLoading(false)
+    } finally {
+      setLoading(false);
     }
   };
   const handleChange = (e) => {
@@ -63,7 +63,7 @@ const LoginTreinador = () => {
   return (
     <section className="flex flex-col items-center my-5">
       <ToastContainer />
-      <Navbar/>
+      <Navbar />
       <h1 className="text-2xl my-4">Login do treinador</h1>
       <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
         <div className="flex flex-col">
@@ -74,12 +74,20 @@ const LoginTreinador = () => {
           <label htmlFor="cpf">CPF</label>
           <input onChange={handleChange} type="number" name="" id="cpf" />
         </div>
-        <button className="border border-black" type="submit">
+        <button
+          disabled={!cpf || !email || cpf.length !== 11}
+          className={`border border-black ${
+            cpf.length === 11
+              ? "hover:bg-black hover:text-white active:scale-95"
+              : ""
+          }`}
+          type="submit"
+        >
           submit
         </button>
       </form>
       {erro && <p>{erro}</p>}
-      <div className="my-3">{loading && <Loading/> }</div>
+      <div className="my-3">{loading && <Loading />}</div>
     </section>
   );
 };
